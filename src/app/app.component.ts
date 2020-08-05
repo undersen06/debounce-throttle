@@ -113,7 +113,7 @@ export class AppComponent implements OnInit {
 
   subscribeDelay(mouse) {
     fromEvent(mouse, 'mousemove').pipe(
-      delay(100),
+      delay(1500),
       map((data) => {
         return data;
       }),
