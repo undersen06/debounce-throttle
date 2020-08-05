@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   leftMargin = 100;
   title = 'debounce-throttle';
 
-  paintColors = [this.getRandomColor(), this.getRandomColor(), this.getRandomColor()];
+  paintColors = [this.getRandomColor(), this.getRandomColor(), this.getRandomColor(),this.getRandomColor()];
 
 
 
@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
 
     var x = (this.canvas.width - this.leftMargin) / this.canvasTimeScale * time + this.leftMargin;
     var y = this.canvas.height / this.paintColors.length * lane;
-    var height = this.canvas.height / this.paintColors.length;
+    var height = (this.canvas.height / this.paintColors.length) - 20;
     var width = 1;
 
     this.canvasContext.fillRect(x, y, width, height);
@@ -55,13 +55,16 @@ export class AppComponent implements OnInit {
 
     this.canvasContext.font = "200 18px Roboto,Helvetica,Arial";
     this.canvasContext.fillStyle = this.paintColors[0]
-    this.canvasContext.fillText("Regular", 0, 100);
+    this.canvasContext.fillText("Regular", 0, 80);
 
     this.canvasContext.fillStyle = this.paintColors[1]
-    this.canvasContext.fillText("debounce", 0, 300);
+    this.canvasContext.fillText("debounce", 0, 220);
 
     this.canvasContext.fillStyle = this.paintColors[2]
-    this.canvasContext.fillText("throttle", 0, 500);
+    this.canvasContext.fillText("throttle", 0, 360);
+
+    this.canvasContext.fillStyle = this.paintColors[3]
+    this.canvasContext.fillText("delay", 0, 500);
   }
 
   getTimeDiff() {
@@ -77,6 +80,7 @@ export class AppComponent implements OnInit {
     this.subscribeRegular(mouse)
     this.subscribeDebounce(mouse)
     this.subscribeThottleTime(mouse)
+    this.subscribeDelay(mouse)
 
   }
   subscribeRegular(mouse) {
@@ -105,6 +109,15 @@ export class AppComponent implements OnInit {
         return data;
       }),
     ).subscribe((x: any) => this.paintRect(2, this.getTimeDiff()));
+  }
+
+  subscribeDelay(mouse) {
+    fromEvent(mouse, 'mousemove').pipe(
+      delay(100),
+      map((data) => {
+        return data;
+      }),
+    ).subscribe((x: any) => this.paintRect(3, this.getTimeDiff()));
   }
 
 
